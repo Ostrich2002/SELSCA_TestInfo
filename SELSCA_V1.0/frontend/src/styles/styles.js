@@ -1,6 +1,6 @@
 import { createTheme} from "@mui/material";
 import { shape } from "@mui/system";
-
+//import { Global, css } from '@emotion/react'   //i added this while installation when i was getting dependency conflict from @mui/styles  but even this did not work
 
 const MainTheme = createTheme({
   palette: {

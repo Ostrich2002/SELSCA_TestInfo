@@ -31,7 +31,6 @@ const UserData = () => {
     const handleChange = async (e) => {
         setUserType(e.target.value)
         console.log(userType)
-
         
     }
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import Upload from "./components/uploadpage/Upload"
 import Login from "./components/login/Login"
@@ -9,6 +10,7 @@ import {
   Route
 
 } from "react-router-dom";
+
 import {useState} from 'react';
 function App() {
   const [user,setLoginUser] = useState({

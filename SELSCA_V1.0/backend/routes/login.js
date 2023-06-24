@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -15,6 +17,12 @@ router.post('/' , async (req,res) => {
     const password = req.body.password;
     const role = req.body.role;
 
+//these 3 lines get printed in terminal where we have started the backend server
+console.log('email:', email);   //extra line just to check what are values
+console.log('password:', password);   //extra line just to check what are values
+console.log('role:', role);   //extra line just to check what are values
+
+
     if (email && password) {
 
         if (role == 'student') {
@@ -26,13 +34,13 @@ router.post('/' , async (req,res) => {
                 })
             }
 
-            const isMatch = await bcrypt.compare(req.body.password , student.password)
+            const isMatch = await bcrypt.compare(req.body.password , student.password)  
+            console.log(isMatch);
             if (!isMatch) {
                 return res.status(401).json({
                     message : "Invalid password"
                 })
             }
-
             const payload = { 
                 id : student._id,
                 email : student.email
