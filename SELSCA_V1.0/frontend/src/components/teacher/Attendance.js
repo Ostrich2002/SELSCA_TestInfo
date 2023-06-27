@@ -30,7 +30,12 @@ const Attendance = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [allClasses , setAllClasses] = useState([])
 
+
+  useEffect(() => {
+    fetchClasses();
+}, []);
 
 
   useEffect(() => {
@@ -119,24 +124,16 @@ const Attendance = () => {
       });
     }
   };
-  
+
+  const fetchClasses = async () => {
+    var tempClasses = await axios.get('http://localhost:5000/info/allClasses')
+    setAllClasses(tempClasses.data)
+  }
   
 
   return (
-      <Container maxWidth="md">
-        <Paper
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-          }}
-        >
-          <Typography variant="h1" gutterBottom>
-            Attendance Portal
-          </Typography>
-  
+    <Container sx={{ paddingTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f4f4f4', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', margin: '50px auto', maxWidth: '90vw' }}>
+    <Typography variant="h1" sx={{ marginBottom: 6}}>Attendance Portal</Typography>
           <div
             style={{
               display: 'flex',
@@ -174,21 +171,16 @@ const Attendance = () => {
             </Typography>
             <FormControl>
               <InputLabel id="class-select-label">Class</InputLabel>
-              <Select
-                labelId="class-select-label"
-                id="class-select"
-                value={selectedClass}
-                onChange={handleClassChange}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={7}>7</MenuItem>
-                <MenuItem value={8}>8</MenuItem>
-              </Select>
+              <Select 
+                        value={selectedClass}
+                        label="Class"
+                        onChange={(e) => { setSelectedClass(e.target.value) }}
+                        sx={{ margin: '0 10px' }}
+                    >
+                        {allClasses.map((className, index) => (
+                            <MenuItem key={index} value={className}>{className}</MenuItem>
+                        ))}
+                    </Select>
             </FormControl>
           </div>
   
@@ -241,7 +233,7 @@ const Attendance = () => {
   onClick={handleSubmit}
   disabled={isSubmitting}
   variant="contained"
-  sx={{ marginTop: '1rem' }}
+  sx={{ marginTop: '1rem' , marginBottom : "10px" }}
 >
   {isSubmitting ? (
     <CircularProgress size={24} />
@@ -249,7 +241,6 @@ const Attendance = () => {
     'Submit Attendance'
   )}
 </Button>
-      </Paper>
       </Container>
     );
   };

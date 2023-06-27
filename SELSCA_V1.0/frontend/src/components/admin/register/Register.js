@@ -61,7 +61,7 @@ const Register = () => {
                 text : 'Please enter password'
             })
         }
-        else if (studentID === "") {
+        else if (studentID === "" && role === "student") {
             Swal.fire({
                 icon : 'warning',
                 text : 'Please enter studentID no.'
@@ -132,6 +132,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'Admin successfully registered'
                     })
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                     ClearForm()
                 })
                 .catch(err => {
@@ -151,7 +154,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'Headmaster successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -169,7 +174,10 @@ const Register = () => {
                         icon : 'success',
                         title : 'Teacher successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
+                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -192,8 +200,8 @@ const Register = () => {
                         }
                     ]
                 }
-
-
+                
+                
                 axios.post("http://localhost:5000/register/registerStudent" , studentsData)
                 .then(res => {
                     Swal.close()
@@ -201,7 +209,10 @@ const Register = () => {
                         icon : 'success',
                         title : 'Student successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
+                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -215,7 +226,7 @@ const Register = () => {
                 const newClass = {
                     name : name
                 }
-
+                
                 axios.post("http://localhost:5000/register/registerClass" , newClass)
                 .then(res => {
                     Swal.close()
@@ -223,8 +234,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'class successfully registered'
                     })
-                    fetchClasses();
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -235,6 +247,7 @@ const Register = () => {
                 })
             }
         }
+        
     }
     return (
         <Grid container spacing={3}>

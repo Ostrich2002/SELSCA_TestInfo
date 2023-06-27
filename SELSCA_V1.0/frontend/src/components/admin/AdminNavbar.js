@@ -26,6 +26,7 @@ import { Divider } from "@mui/material";
 import { ListItemButton, ListItemIcon } from "@mui/material";
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
+import PersonIcon from '@mui/icons-material/Person';
 
 
 
