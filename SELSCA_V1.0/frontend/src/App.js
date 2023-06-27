@@ -16,7 +16,8 @@ import Studentcal from './components/student/studentcal.js';
 import Gradesview from './components/student/gradesview.js';
 import ExamDates from './components/admin/ExamDates.js';
 import Syllabus from './components/teacher/Syllabus.js';
-import GradesDueDateForm from './components/admin/GradesDueDates.js';
+//import GradesDueDateForm from './components/admin/GradesDueDates.js';  //this module is no more required
+import TestInfoForm from './components/admin/TestInfo.js'//new --added thismodule for testinfo2
 import Attendance from './components/teacher/Attendance.js';
 
 
@@ -69,7 +70,8 @@ function App() {
         <Route path='userprofile' element={<UserProfile />} />
         <Route path='userData' element={<UserData />} />
         <Route path='examDates' element={<ExamDates />} />
-        <Route path='gradesDueDates' element={<GradesDueDateForm />} />
+        <Route path='TestInfo' element={<TestInfoForm />} />        {/* adding this new line in place of grades due date */}
+        {/* <Route path='gradesDueDates' element={<GradesDueDateForm />} /> */}         {/*new ---commenting out this line */}
       </Route>
       <Route path='/teacher' element={<TeacherLayout />}>
           <Route path='userprofile' element={<UserProfile />} />

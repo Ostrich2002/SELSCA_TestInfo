@@ -7,7 +7,7 @@ const TestInfoSchema = new Schema({
         type : String,
         required : true
     },
-    class : {
+    testClass : {//here I changed class to testClass to mathch with variable name used in testInfo2.js 
         type : String,
         required : true
     },
@@ -22,7 +22,15 @@ const TestInfoSchema = new Schema({
     maxScore  : {
         type : Number,
         required : true
-    }
+    },
+    //new start
+    gradesDueDate : {
+        type : Date
+    } , 
+    syllabus : {
+        type : String
+    },
+    //new end
 })
 
 module.exports = TestInfo = mongoose.model('TestInfo' , TestInfoSchema);

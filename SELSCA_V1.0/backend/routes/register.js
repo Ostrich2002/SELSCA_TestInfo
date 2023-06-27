@@ -293,29 +293,62 @@ router.post('/registerTest', async (req, res) => {
              class: className,
              maxScore: maxScore,
              subject: subject[0],
+             subject: subject,//new start-end
              date: date
          });
          await newTestInfo.save();
+
+         console.log(newTestInfo)//new start-end
  
          // Update the Class with the new test name
          await Class.updateOne(
-             { name: className },
-             { $push: { tests: testName } }
-         );
+          //new start (commenting out these lines)
+     //         { name: className },
+     //         { $push: { tests: testName } }
+     //     );
  
+         // Add the test to the Grades collection for each student
+     //     const classData = await Class.findOne({ name: className }).populate('students');
+     //     const students = classData.students;
+ 
+     //     for (const student of students) {
+     //         // Update the Grades collection with the specified subject and student ID
+     //         console.log(student)
+     //         await Grades.updateOne(
+     //             { studentID: student, subject: subject[0] },
+     //             { $push: { tests: { testName: testName, score: null } } }
+     //         );
+     //     }
+         //new end(actually removed these lines in original repo but i am just commenting)
+ 
+         //new start (adding thses new lines of code)
+         { name: className },
+         { $push: { tests: testName } }
+         );
+
          // Add the test to the Grades collection for each student
          const classData = await Class.findOne({ name: className }).populate('students');
          const students = classData.students;
- 
+
+         console.log(students)
+
          for (const student of students) {
-             // Update the Grades collection with the specified subject and student ID
-             console.log(student)
-             await Grades.updateOne(
-                 { studentID: student, subject: subject[0] },
-                 { $push: { tests: { testName: testName, score: null } } }
-             );
-         }
- 
+              // Update the Grades collection with the specified subject and student ID
+              console.log(student)
+              try {
+               await Grades.updateOne(
+                   { studentID: student, subject: subject },
+                   { $push: { tests: { testName: testName, score: null } } }
+               );
+           } catch (error) {
+               console.error("Error updating grades:", error);
+               throw error; // Or handle the error as appropriate for your application
+           }
+
+               }
+
+               console.log('test added')
+         //new end
          res.status(200).json({ message: 'Test added successfully.' });
      } catch (err) {
          console.error(err.message);

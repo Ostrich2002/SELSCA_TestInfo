@@ -12,6 +12,11 @@ const TestSchema = new Schema({
     score: {
         type: Number,
     },
+    //new start
+    gradesDueDate : {
+        type : Date,
+    },
+    //new end
 });
 
 module.exports = TestSchema

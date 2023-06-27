@@ -16,6 +16,13 @@ const ClassSchema = new Schema({
             type: String
         }
     ],
+    //new start
+    subject : [
+        {
+            type : String
+        }
+    ]
+    //new end
 });
 
 module.exports = Class = mongoose.model('Class', ClassSchema);
