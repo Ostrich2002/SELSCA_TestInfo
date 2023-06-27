@@ -11,6 +11,7 @@ const Headmaster = require("../models/Headmaster");
 const Grades = require("../models/Grades");
 const Class = require("../models/Class");
 const TestInfo = require('../models/TestInfo');
+const Subject = require('../models/Subject');
 
 //admin registration function which hashes the given passwords and creates a new admin object in the mongoDB database
 router.post("/registerAdmin" , async(req,res) => {
@@ -168,63 +169,7 @@ router.post("/registerStudent", async (req, res) => {
        res.status(500).json({ message: "Internal server error" });
      }
    });
-   
 
-
-// router.post('/registerTest', async (req, res) => {
-//      const { className, testName, maxScore, subject, date } = req.body;
- 
-//      try {
-//          // Create a new TestInfo object
-//          const newTestInfo = new TestInfo({
-//              testName: testName,
-//              class: className,
-//              maxScore: maxScore,
-//              subject: subject[0],
-//              date: date
-//          });
-//          await newTestInfo.save();
- 
-//          // Update the Class with the new test name
-//          await Class.updateOne(
-//              { name: className },
-//              { $push: { tests: testName } }
-//          );
- 
-//          // Add the test to the Grades collection for each student
-//          const classData = await Class.findOne({ name: className }).populate('students');
-//          const students = classData.students;
-//          console.log(students)
- 
-//          for (const student of students) {
-//              // Find Grades collections with the specified subject and student ID
-//              let grade = await Grades.findOne({ studentID: student[0], subject: subject[0] });
- 
-//              // If a matching Grades collection is not found, create a new one
-//              if (!grade) {
-//                  grade = new Grades({
-//                      studentName: student.name,
-//                      studentID: student.studentID,
-//                      subject: subject[0],
-//                      tests: [],
-//                      finalGrade: null
-//                  });
-//                  await grade.save();
-//              }
- 
-//              // Add the test object with a null score
-//              await Grades.updateOne(
-//                  { studentID: student.studentID, subject: subject[0] },
-//                  { $push: { tests: { testName: testName, score: null } } }
-//              );
-//          }
- 
-//          res.status(200).json({ message: 'Test added successfully.' });
-//      } catch (err) {
-//          console.error(err.message);
-//          res.status(500).send('Server error');
-//      }
-//  });
  
 router.post('/registerTest', async (req, res) => {
      const { className, testName, maxScore, subject, date } = req.body;
@@ -277,7 +222,22 @@ router.post('/registerTest', async (req, res) => {
      }
  });
  
-
+router.post("/registerSubject" , async (req, res) => {
+     const {name , code } = req.body;
+     
+     try {
+          let subject = new Subject({
+               name : name,
+               code : code 
+          })
+          await subject.save();
+          res.status(200).send('subject registered successfully')
+     }
+     catch (err) {
+          console.log(err)
+          res.status(500).send('internal server error')
+     }
+})
  
 
 module.exports = router;

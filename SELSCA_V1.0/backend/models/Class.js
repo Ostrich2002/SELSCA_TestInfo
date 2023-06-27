@@ -16,9 +16,10 @@ const ClassSchema = new Schema({
             type: String
         }
     ],
-    subject : [
+    subjects : [
         {
-            type : String
+            type :mongoose.Schema.Types.ObjectId,
+            ref : "Subject"
         }
     ]
 });
