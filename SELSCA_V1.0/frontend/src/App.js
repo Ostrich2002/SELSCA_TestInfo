@@ -9,7 +9,7 @@ import Login from './components/common/Login';
 import UserProfile from './components/common/UserProfile.js';
 import TeacherNavbar from './components/teacher/TeacherNavbar.js';
 import StudentNavbar from './components/student/StudentNavbar.js';
-import UserData from './components/admin/UserData.js';
+
 import GradesCenter from './components/teacher/GradesCenter.js';
 import Grades from './components/student/grades.js';
 import Studentcal from './components/student/studentcal.js';
@@ -28,34 +28,35 @@ function App() {
     return (
       <Box>
         <AdminNavbar />
-        <Container sx={{ paddingLeft : 240}}>
+        <Container sx={{ paddingLeft: 240, paddingTop: '64px' }}>
           <Outlet />
-        </Container> 
+        </Container>
       </Box>
     );
   };
-
+  
   const TeacherLayout = () => {
     return (
       <Box>
         <TeacherNavbar />
-        <Container>
+        <Container sx={{ paddingTop: '64px' }}>
           <Outlet />
-        </Container> 
+        </Container>
       </Box>
     );
   };
-
+  
   const StudentLayout = () => {
     return (
       <Box>
         <StudentNavbar />
-        <Container>
+        <Container sx={{ paddingTop: '64px' }}>
           <Outlet />
-        </Container> 
+        </Container>
       </Box>
     );
   };
+  
 
   return(
 
@@ -68,7 +69,6 @@ function App() {
       <Route path='/admin' element={<AdminLayout />}>
         <Route path='register' element={<Register />} />
         <Route path='userprofile' element={<UserProfile />} />
-        <Route path='userData' element={<UserData />} />
         <Route path='examDates' element={<ExamDates />} />
         <Route path='TestInfo' element={<TestInfoForm />} />        {/* adding this new line in place of grades due date */}
         {/* <Route path='gradesDueDates' element={<GradesDueDateForm />} /> */}         {/*new ---commenting out this line */}

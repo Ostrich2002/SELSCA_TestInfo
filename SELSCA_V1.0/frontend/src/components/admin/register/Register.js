@@ -1,10 +1,20 @@
-import { Typography , Grid , Container,  Select , MenuItem  , TextField , Button, Menu} from "@mui/material";
-import React, { useState } from "react";
+import { Typography , Grid , Paper, Container,  Select , MenuItem  , TextField , Button, Menu} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import "./../../../styles/styles.css" ;
 
 const Register = () => {
+
+    const roleDescription = {
+        "admin": "Admins have full access to the system.",
+        "headmaster": "Headmasters manage a particular school.",
+        "teacher": "Teachers manage a particular class.",
+        "student": "Students are assigned to a class.",
+        "class": "Classes are managed by teachers."
+      }
+
+
     //setting neccesary parameters for registration
     //role determines which inputs are rendered on the page
     const [role , setRole] = useState("");
@@ -14,6 +24,16 @@ const Register = () => {
     const [studentID , setstudentID] = useState("");
     const [classno , setClassno] = useState("");
     const [dob , setDob] = useState("");
+    const [allClasses , setAllClasses] = useState("")
+
+    const fetchClasses = async () => {
+        var tempClasses = await axios.get('http://localhost:5000/info/allClasses')
+        setAllClasses(tempClasses.data)
+    }
+    
+    useEffect(() => {
+        fetchClasses();
+    }, []);
 
     //checking if all the required parameters or registration are given 
     //giving an alert if not given
@@ -41,7 +61,7 @@ const Register = () => {
                 text : 'Please enter password'
             })
         }
-        else if (studentID === "") {
+        else if (studentID === "" && role === "student") {
             Swal.fire({
                 icon : 'warning',
                 text : 'Please enter studentID no.'
@@ -77,6 +97,7 @@ const Register = () => {
         setPassword("")
         setDob("")
         setClassno("")
+        setRole("")
     }
 
     //main registration fucntion
@@ -111,6 +132,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'Admin successfully registered'
                     })
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                     ClearForm()
                 })
                 .catch(err => {
@@ -130,7 +154,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'Headmaster successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -148,7 +174,10 @@ const Register = () => {
                         icon : 'success',
                         title : 'Teacher successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
+                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -171,8 +200,8 @@ const Register = () => {
                         }
                     ]
                 }
-
-
+                
+                
                 axios.post("http://localhost:5000/register/registerStudent" , studentsData)
                 .then(res => {
                     Swal.close()
@@ -180,7 +209,10 @@ const Register = () => {
                         icon : 'success',
                         title : 'Student successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
+                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -194,7 +226,7 @@ const Register = () => {
                 const newClass = {
                     name : name
                 }
-
+                
                 axios.post("http://localhost:5000/register/registerClass" , newClass)
                 .then(res => {
                     Swal.close()
@@ -202,7 +234,9 @@ const Register = () => {
                         icon : 'success',
                         title : 'class successfully registered'
                     })
-                    ClearForm()
+                    .then(() => {
+                        window.location.reload(false);
+                    })
                 })
                 .catch(err => {
                     console.log(err)
@@ -213,38 +247,43 @@ const Register = () => {
                 })
             }
         }
+        
     }
     return (
-        <Container >
-            <Grid container >
-                <Grid item xs={12} display="flex" alignItems='center' justifyContent='center'>
-                    <Typography variant="Overline" sx={{fontSize:50 , color : "#242424"}} >Registration Portal</Typography>
-                </Grid>
-                <Grid item xs={6} display = 'flex' alignItems={"center"} justifyContent="right" padding={3}>
-                    <Typography variant="body1"
-                    sx ={{paddingRight:3,}}>Select Role being registered :</Typography>
-                </Grid>
-                <Grid item xs ={6}  display="flex" alignItems='center' justifyContent='left' padding={3}>
-                    <Select value={role} label="Role"  
-                    sx={{
+        <Grid container spacing={3}>
+        <Grid item xs={12}>
+        <Container sx={{ paddingTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f4f4f4', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', margin: '50px auto', maxWidth: '90vw' }}>
+    <Grid container>
+        <Grid item xs={12} display="flex" alignItems='center' justifyContent='center' sx={{ padding: 2 }}>
+            <Typography variant="Overline" sx={{ fontSize: 50, color: "#4E4E4E" }}>Registration Portal</Typography>
+        </Grid>
+        <Grid item xs={6} display='flex' alignItems={"center"} justifyContent="flex-end" sx={{ padding: 3 }}>
+            <Typography variant="body1" sx={{ paddingRight: 3, color: "#4E4E4E" }}>Select Role being registered:</Typography>
+        </Grid>
+        <Grid item xs={6} display="flex" alignItems='center' justifyContent='flex-start' sx={{ padding: 3 }}>
+            <Select
+                value={role}
+                label="Role"
+                sx={{
                     width: 100,
                     height: 60,
                     marginRight: 15,
-                    border: "1px solid darkgrey",
-                    color: "#242424",
+                    border: "1px solid #4E4E4E",
+                    color: "#4E4E4E",
                     "& .MuiSvgIcon-root": {
-                        color: "black",
+                        color: "#4E4E4E",
                     },
-                    }}
-                    onChange={(e) => {setRole(e.target.value)}}>
-                        <MenuItem value="admin">Admin</MenuItem>
-                        <MenuItem value="headmaster">Headmaster</MenuItem>
-                        <MenuItem value="teacher">Teacher</MenuItem>
-                        <MenuItem value="student">Student</MenuItem>
-                        <MenuItem value="class">Class</MenuItem>
-                    </Select>
-                </Grid>
-                </Grid>
+                }}
+                onChange={(e) => { setRole(e.target.value) }}
+            >
+                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="headmaster">Headmaster</MenuItem>
+                <MenuItem value="teacher">Teacher</MenuItem>
+                <MenuItem value="student">Student</MenuItem>
+                <MenuItem value="class">Class</MenuItem>
+            </Select>
+        </Grid>
+    </Grid>
                 <Container>
                 <Grid container spacing={2} sx={{paddingTop:5}}>
                     <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
@@ -300,22 +339,7 @@ const Register = () => {
                         }}
                         onChange={(e) => {setPassword(e.target.value)}}> </TextField>
                     </Grid>
-                    <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
-                        <Typography 
-                        variant="body1" 
-                        sx={{paddingRight:3,
-                            color : "#242424"}}
-                            >studentID :</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField sx={{
-                            "& .MuiInputBase-root": {
-                                color: 'text.secondary'
-                            }
-                        }}
-                        onChange={(e) => {setstudentID(e.target.value)}} ></TextField>
-                    </Grid>
-                    </>
+                        </>
                     }
 
                         {/* selectively rendering the neccessary inputs depending on the role (teacher or student) */}
@@ -342,6 +366,21 @@ const Register = () => {
                     {
                         role === "student" &&
                         <>
+                                <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
+                                    <Typography 
+                                    variant="body1" 
+                                    sx={{paddingRight:3,
+                                        color : "#242424"}}
+                                        >studentID :</Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField sx={{
+                                        "& .MuiInputBase-root": {
+                                            color: 'text.secondary'
+                                        }
+                                    }}
+                                    onChange={(e) => {setstudentID(e.target.value)}} ></TextField>
+                                </Grid>
                         <Grid item xs ={6} display="flex" justifyContent={'right'} alignItems="center">
                             <Typography 
                             variant="body1" 
@@ -366,22 +405,35 @@ const Register = () => {
                             >Class :</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField 
-                            sx={{
-                                "& .MuiInputBase-root": {
-                                    color: 'text.secondary'
-                                }
-                            }}
-                             onChange={(e) => {setClassno(e.target.value)}}> </TextField>
+                        <Select 
+                        value={classno}
+                        label="Class"
+                        onChange={(e) => { setClassno(e.target.value) }}
+                        sx={{ margin: '0 10px' }}
+                    >
+                        {allClasses.map((className, index) => (
+                            <MenuItem key={index} value={className}>{className}</MenuItem>
+                            ))}
+                    </Select>
                         </Grid>
                         </>
                     }
-                    <Grid item xs={12} display="flex" justifyContent={"center"} alignItems="center" >
-                        <Button variant="outlined" onClick={handleSubmit}>Submit</Button>
-                    </Grid>
-                </Grid>
-                </Container>
-        </Container>
+                    <Grid item xs={12} display="flex" justifyContent={"center"} alignItems="center" sx={{ padding: 3 }}>
+                <Button variant="outlined" sx={{ backgroundColor: '#4E4E4E', color: '#D9D9D9' }} onClick={handleSubmit}>Submit</Button>
+            </Grid>
+        </Grid>
+    </Container>
+</Container>
+</Grid>
+      {/* <Grid item xs={4} style={{display: 'flex', justifyContent: 'center'}}>
+    <Paper elevation={2} style={{ padding: '20px', backgroundColor: "#D9D9D9", color: '#4E4E4E', height: 'fit-content' }}>
+      <Typography variant="h5">Role Information</Typography>
+      <Typography variant="body1">
+        {roleDescription[role] || "Please select a role."}
+      </Typography>
+    </Paper>
+  </Grid> */}
+    </Grid>
     )
 }
 

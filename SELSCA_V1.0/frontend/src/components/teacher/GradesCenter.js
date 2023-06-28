@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Box, Select, MenuItem, Button, Typography, TextField, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+
+
 function GradesCenter() {
     const [classValue, setClassValue] = useState("");
     const [subject, setSubject] = useState("");
@@ -161,46 +164,62 @@ function GradesCenter() {
         setAllClasses(tempClasses.data)
     }
 
+
     return (
-        <Container sx={{ paddingTop: "10px", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Box sx={{ width: '100%', maxHeight: '400px', overflow: 'auto', marginBottom: 2 }}>
-                <Select value={classValue}
-                    label="Class"
-                    onChange={(e) => { setClassValue(e.target.value) }}>
-                    {allClasses.map((className, index) => (
-                        <MenuItem key={index} value={className}>{className}</MenuItem>
-                    ))}
-                </Select>
-                <Select value={subject}
-                    label="Subject"
-                    onChange={(e) => { setSubject(e.target.value); setInputValues({}) }}>
+        <Container sx={{ paddingTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f4f4f4', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', margin: '50px auto', maxWidth: '90vw' }}>
+            <Typography variant="h1" sx={{ marginBottom: 6}}>Grades Center</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginBottom: 3  }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="h6">Class: </Typography>
+                    <Select 
+                        value={classValue}
+                        label="Class"
+                        onChange={(e) => { setClassValue(e.target.value) }}
+                        sx={{ margin: '0 10px' }}
+                    >
+                        {allClasses.map((className, index) => (
+                            <MenuItem key={index} value={className}>{className}</MenuItem>
+                        ))}
+                    </Select>
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="h6">Subject: </Typography>
+                    <Select 
+                        value={subject}
+                        label="Subject"
+                        onChange={(e) => { setSubject(e.target.value); setInputValues({}) }}
+                        sx={{ margin: '0 10px' }}
+                    >
                     <MenuItem value="English">English</MenuItem>
                     <MenuItem value="Maths">Maths</MenuItem>
                     <MenuItem value="Science">Science</MenuItem>
                     <MenuItem value="Hindi">Hindi</MenuItem>
                     <MenuItem value="Social">Social</MenuItem>
-                </Select>
-                <Button variant="contained" color="primary" onClick={getGrades}>Get grades</Button>
+                    </Select>
+                </Box>
+
+                <Button variant="contained" color="primary" onClick={getGrades} sx={{ backgroundColor: '#4E4E4E' }}>Get grades</Button>
             </Box>
 
-            <Box sx={{ width: '100%', overflowX: 'auto', marginBottom: 2 }}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
+            <Box sx={{ width: '100%', overflowX: 'auto', marginBottom: 2, borderRadius: '10px' }}>
+    <Table sx={{ borderCollapse: 'collapse' }}>
+      <TableHead>
+        <TableRow>
+          <TableCell sx={{ border: '1px solid #000', backgroundColor: '#404040', color: '#FFF' }}>
+            <Typography variant="h5">
+              Student Name
+            </Typography>
+          </TableCell>
+          {tests.map((item, i) => (
+            <TableCell key={i} sx={{ border: '1px solid #000', backgroundColor: '#404040', color: '#FFF' }}>
+              <Typography variant="h5">
+                {item}
+              </Typography>
+            </TableCell>
+          ))}
                             <TableCell>
-                                <Typography variant="h5">
-                                    Student Name
-                                </Typography>
-                            </TableCell>
-                            {tests.map((item, i) => (
-                                <TableCell key={i}>
-                                    <Typography variant="h5">
-                                        {item}
-                                    </Typography>
-                                </TableCell>
-                            ))}
-                            <TableCell>
-                                <Button variant="contained" color="secondary" onClick={() => setAddTestDialogOpen(true)}>Add Test</Button>
+                                <Button variant="contained" sx={{ backgroundColor : "primary"}} onClick={() => setAddTestDialogOpen(true)}>Add Test</Button>
 
                                 <Dialog open={addTestDialogOpen} onClose={() => setAddTestDialogOpen(false)}>
                                     <DialogTitle>Add a new test</DialogTitle>
@@ -251,23 +270,23 @@ function GradesCenter() {
                                 </Dialog>
                             </TableCell>
                         </TableRow>
-                    </TableHead>
-
-                    <TableBody>
-                        {grades.map((grade, i) => (
-                            <TableRow key={i}>
-                                <TableCell style={{ width: 150, textAlign: 'center', backgroundColor: "#d1d1d1" }}>
-                                    <Typography variant="overline">
-                                        {grade.studentName}
-                                    </Typography>
-                                </TableCell>
-                                {tests.map((test, j) => (
-                                    <TableCell key={`${i}-${j}`}>
+                        </TableHead>
+      <TableBody>
+        {grades.map((grade, i) => (
+          <TableRow key={i}>
+            <TableCell sx={{ border: '1px solid #000', width: 150, textAlign: 'center', backgroundColor: "#808080", color: '#FFF' }}>
+              <Typography variant="overline">
+                {grade.studentName}
+              </Typography>
+            </TableCell>
+            {tests.map((test, j) => (
+              <TableCell key={`${i}-${j}`} sx={{ border: '1px solid #000', backgroundColor: "#ffffff1", color: '#4E4E4E', padding: '0px' }}>
                                         <TextField
                                                 type="number"
                                                 id={`${i}-${test}`}
                                                 value={inputValues[`${i}-${test}`] || grade.tests[test] || ""}
                                                 variant="outlined"
+                                                sx={{ margin: 0 }}  
                                                 onChange={(e) => {
                                                     setInputValues(prevValues => ({
                                                         ...prevValues,
@@ -284,10 +303,10 @@ function GradesCenter() {
                             </TableRow>
                         ))}
                     </TableBody>
-                </Table>
+                    </Table>
             </Box>
 
-            <Button variant="contained" color="success" onClick={submitGrades}>Submit Grades</Button>
+            <Button variant="contained" color="success" onClick={submitGrades} sx={{ backgroundColor: '#4E4E4E', marginTop: 3 , marginBottom : 3 }}>Submit Grades</Button>
         </Container>
     );
 }

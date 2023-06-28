@@ -1,4 +1,5 @@
-import { Typography , Grid , Container , Button  , Box} from "@mui/material";
+import { Typography, Grid, Container, Table, TableContainer, TableBody, TableRow, TableCell, Box, Avatar } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2';
@@ -41,75 +42,41 @@ const UserProfile = () => {
 
 
     return(
-        <Container >
-            <Grid container spacing={2} sx={{paddingTop:5}}>
-            <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
-                <Typography 
-                variant="body1" 
-                sx={{paddingRight:3,
-                    color : "#242424"}}
-                >Name :</Typography>
-            </Grid>
-            <Grid item xs ={6} >
-            <Typography 
-                variant="body1" 
-                sx={{paddingRight:3,
-                    color : "#242424"}}
-                >{user.name}</Typography>
-            </Grid>
-            <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
-                <Typography 
-                variant="body1" 
-                sx={{paddingRight:3,
-                    color : "#242424"}} 
-               >Email :</Typography>
-            </Grid>
-            <Grid item xs ={6}>
-            <Typography 
-                variant="body1" 
-                sx={{paddingRight:3,
-                    color : "#242424"}} 
-               >{user.email}</Typography>
-            </Grid>
-
-            {/* conditionally rendering the right components depending on the role of the user */}
-            {(role === "teacher" || role === "student") &&
-            <>
-            <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
-                    <Typography 
-                    variant="body1" 
-                    sx={{paddingRight:3,
-                        color : "#242424"}} 
-                    >Date of Birth :</Typography>
-                </Grid>
-                <Grid item xs ={6}>
-                    <Typography 
-                    variant="body1" 
-                   sx={{paddingRight:3,
-                    color : "#242424"}} 
-                    >{user.DOB}</Typography>
-                </Grid>
-            </>  
-            }
-            {role === "student" && 
-                <>
-                <Grid item xs={6} display="flex" justifyContent={'right'} alignItems="center">
-                    <Typography 
-                    variant="body1" 
-                    sx={{paddingRight:3,
-                        color : "#242424"}} 
-                    >class :</Typography>
-                </Grid>
-                <Grid item xs ={6}>
-                    <Typography 
-                    variant="body1" 
-                   sx={{paddingRight:3,
-                    color : "#242424"}} 
-                    >{user.class}</Typography>
-                </Grid>
-                </>
-            }
-            </Grid>
+        <Container sx={{ paddingTop: "50px", display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f4f4f4', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', margin: '50px auto', maxWidth: '90vw' }}>
+            <Box sx={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column', gap:2 }}>
+                <AccountCircleIcon sx={{ fontSize: 100 }} />
+                <Typography variant="h4" sx={{ textAlign:'center' }}>Basic Information</Typography>
+            </Box>
+            <TableContainer sx={{ backgroundColor:'#D9D9D9',marginBottom : 4 ,borderRadius:1, marginTop:3, padding:2 }}>
+                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>{user.name}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Email</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                        </TableRow>
+                        {(role === "teacher" || role === "student") &&
+                        <>
+                            <TableRow>
+                                <TableCell>Date of Birth</TableCell>
+                                <TableCell>{user.DOB}</TableCell>
+                            </TableRow>
+                        </>  
+                        }
+                        {role === "student" && 
+                        <>
+                            <TableRow>
+                                <TableCell>Class</TableCell>
+                                <TableCell>{user.class}</TableCell>
+                            </TableRow>
+                        </>
+                        }
+                    </TableBody>
+                </Table>
+            </TableContainer >
         </Container>
     )
 }

@@ -16,6 +16,7 @@ const ClassSchema = new Schema({
             type: String
         }
     ],
+<<<<<<< HEAD
     //new start
     subject : [
         {
@@ -23,6 +24,14 @@ const ClassSchema = new Schema({
         }
     ]
     //new end
+=======
+    subjects : [
+        {
+            type :mongoose.Schema.Types.ObjectId,
+            ref : "Subject"
+        }
+    ]
+>>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
 });
 
 module.exports = Class = mongoose.model('Class', ClassSchema);
