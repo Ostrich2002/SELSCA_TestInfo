@@ -180,17 +180,12 @@ router.post('/registerTest', async (req, res) => {
              testName: testName,
              class: className,
              maxScore: maxScore,
-<<<<<<< HEAD
              subject: subject[0],
              subject: subject,//new start-end
-=======
-             subject: subject,
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
              date: date
          });
          await newTestInfo.save();
 
-<<<<<<< HEAD
          console.log(newTestInfo)//new start-end
  
          // Update the Class with the new test name
@@ -242,38 +237,6 @@ router.post('/registerTest', async (req, res) => {
 
                console.log('test added')
          //new end
-=======
-         console.log(newTestInfo)
-
-         // Update the Class with the new test name
-         await Class.updateOne(
-              { name: className },
-              { $push: { tests: testName } }
-              );
-              
-              // Add the test to the Grades collection for each student
-              const classData = await Class.findOne({ name: className }).populate('students');
-              const students = classData.students;
-
-              console.log(students)
-              
-              for (const student of students) {
-                   // Update the Grades collection with the specified subject and student ID
-                   console.log(student)
-                   try {
-                    await Grades.updateOne(
-                        { studentID: student, subject: subject },
-                        { $push: { tests: { testName: testName, score: null } } }
-                    );
-                } catch (error) {
-                    console.error("Error updating grades:", error);
-                    throw error; // Or handle the error as appropriate for your application
-                }
-                
-                    }
-                    
-                    console.log('test added')
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
          res.status(200).json({ message: 'Test added successfully.' });
      } catch (err) {
          console.error(err.message);

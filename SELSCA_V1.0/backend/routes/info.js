@@ -5,11 +5,7 @@ const router = express.Router();
 const GradesDueDate = require('../models/GradesDueDates');
 const Attendance = require('../models/Attendance');
 const Class = require("../models/Class");
-<<<<<<< HEAD
 const TestInfo = require('../models/TestInfo');//new start-end
-=======
-const TestInfo = require('../models/TestInfo');
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
 
 
 router.post('/getTestGrades', async (req, res) => {
@@ -42,7 +38,6 @@ router.post('/getTestGrades', async (req, res) => {
 //new start(actually commenting out the entire region)
 // router.post('/submitGradesDueDates' , async (req,res) => {
 
-<<<<<<< HEAD
 //     const {testName , subject, date} = req.body;
 
 //     try {
@@ -97,29 +92,6 @@ router.post('/submitTestInfo', async (req, res) => {
       testInfo.syllabus = syllabus;
       testInfo.gradesDueDates = gradesDueDates;
     }
-=======
-// router.post('/submitGradesDueDates' , async (req,res) => {
-
-//     const {testName  , classNo, subject, date} = req.body;
-
-//     try {
-//       var testInfo = await TestInfo.findOne({testName : testName  , subject : subject })
-//     }
-//     catch (err) {
-//       console.log(err)
-//       res.status(200).send(err)
-//     }
-
-//     if (testInfo) {
-//       await 
-//     }
-
-//     res.send(testInfo)
-
-
-    
-// })
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
 
     await testInfo.save();
     console.log('Test info registered');
@@ -235,42 +207,12 @@ router.post("/submitSyllabus", async (req, res) => {
     syllabus,
   } = req.body;
 
-<<<<<<< HEAD
-=======
-router.post("/submitSyllabus", async (req, res) => {
-  const {
-    testName,
-    class: classId,
-    subject,
-    date,
-    maxScore,
-    syllabus,
-  } = req.body;
-
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
   try {
     const testInfo = await TestInfo.findOne({
       testName: testName,
       subject: subject,
       class: classId,
     });
-<<<<<<< HEAD
-=======
-
-    if (!testInfo) {
-      return res.status(404).json({ message: "Test not found. Syllabus could not be updated." });
-    }
-
-    testInfo.syllabus = syllabus;
-    await testInfo.save();
-
-    res.status(200).send("Syllabus registered and updated successfully");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal server error");
-  }
-});
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
 
     if (!testInfo) {
       return res.status(404).json({ message: "Test not found. Syllabus could not be updated." });

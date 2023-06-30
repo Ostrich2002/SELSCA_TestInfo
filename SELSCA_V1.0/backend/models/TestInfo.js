@@ -23,21 +23,14 @@ const TestInfoSchema = new Schema({
         type : Number,
         required : true
     },
-<<<<<<< HEAD
     //new start
-=======
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
     gradesDueDate : {
         type : Date
     } , 
     syllabus : {
         type : String
-<<<<<<< HEAD
     },
     //new end
-=======
-    }
->>>>>>> c1d140789c35ef3291ebd9176cb96e3b64df671b
 })
 
 module.exports = TestInfo = mongoose.model('TestInfo' , TestInfoSchema);
