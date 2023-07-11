@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.13.0",
     "react-scripts": "^2.1.8",
+    "smart-webcomponents-react": "^15.2.11",
     "styled-components": "^5.3.6",
     "sweetalert2": "^11.4.8",
     "web-vitals": "^2.1.4"

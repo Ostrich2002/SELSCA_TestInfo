@@ -20,7 +20,7 @@ import Syllabus from './components/teacher/Syllabus.js';
 import TestInfoForm from './components/admin/TestInfo.js'//new --added thismodule for testinfo2
 import Attendance from './components/teacher/Attendance.js';
 
-
+import MyScheduler from './components/admin/Calendar.js';  //for calendar
 
 function App() {
   //conditionally showing the required layouts for the user 
@@ -56,7 +56,7 @@ function App() {
       </Box>
     );
   };
-  
+
 
   return(
 
@@ -72,6 +72,10 @@ function App() {
         <Route path='examDates' element={<ExamDates />} />
         <Route path='TestInfo' element={<TestInfoForm />} />        {/* adding this new line in place of grades due date */}
         {/* <Route path='gradesDueDates' element={<GradesDueDateForm />} /> */}         {/*new ---commenting out this line */}
+
+        <Route path='Calendar' element={<MyScheduler />} />   {/* for calendar */}
+       
+        
       </Route>
       <Route path='/teacher' element={<TeacherLayout />}>
           <Route path='userprofile' element={<UserProfile />} />

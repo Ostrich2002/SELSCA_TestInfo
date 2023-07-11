@@ -125,7 +125,8 @@ const AdminNavbar = () => {
     { text: "User Profile", to: "/admin/userprofile" , src : UserIcon , style : {width : "80%"}},
     { text: "Registration", to: "/admin/register"  , src : RegisterIcon , style : {width : "80%" , paddingLeft : "10px"}},
     { text: "Exam Dates", to: "/admin/examDates" , src : DateIcon , style : {width : "80%" , paddingLeft : "10px"}},
-    { text: "Test Info", to: "/admin/TestInfo" },{/* new---added this line and removed the grades due date */}
+    { text: "Test Info", to: "/admin/TestInfo" },{/* new---added this line and removed the grades due date */},
+    { text: "Academic Calendar", to: "/admin/Calendar" },  //for calendar
   ];
 
   return (
